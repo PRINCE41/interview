@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public class Solution {
     public static void main(String[] args) {
-        List<Integer> llist = List.of(1,2,3);
+        List<Integer> llist = List.of(1,2,3,4,5);
         Optional<Integer> max = llist.stream().max(Comparator.comparing(Integer::intValue));
         System.out.println(max.get());
     }
