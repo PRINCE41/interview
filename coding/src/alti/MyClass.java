@@ -8,8 +8,9 @@ class MyClass {
 }
 
 class Ideone {
-    public static void main (String[] args) throws java.lang.Exception {
+    public static void main (String[] args) throws Exception {
         MyClass mc = new MyClass();
+        MyClass mc2 = new MyClass();
         System.out.println(mc.i);  // Accessing static variable i
     }
 }
