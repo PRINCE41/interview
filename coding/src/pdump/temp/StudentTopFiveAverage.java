@@ -1,0 +1,59 @@
+package pdump.temp;
+
+import java.util.*;
+
+public class StudentTopFiveAverage {
+
+    public static List<int[]> highFive(int[][] items) {
+        Map<Integer, PriorityQueue<Integer>> studentScores = new HashMap<>();
+        
+        // Step 1: Collect each student's scores using a min-heap
+        for (int[] item : items) {
+            int studentId = item[0];
+            int score = item[1];
+            
+            studentScores.putIfAbsent(studentId, new PriorityQueue<>());
+            PriorityQueue<Integer> scores = studentScores.get(studentId);
+            scores.offer(score);
+            
+            // Keep only the top five scores
+            if (scores.size() > 5) {
+                scores.poll();  // Remove the smallest score
+            }
+        }
+        
+        // Step 2: Calculate the average of the top five scores for each student
+        List<int[]> result = new ArrayList<>();
+        for (Map.Entry<Integer, PriorityQueue<Integer>> entry : studentScores.entrySet()) {
+            int studentId = entry.getKey();
+            PriorityQueue<Integer> scores = entry.getValue();
+            
+            // Calculate the average
+            int sum = 0;
+            for (int score : scores) {
+                sum += score;
+            }
+            int average = sum / 5;  // Integer division for the average
+            
+            result.add(new int[]{studentId, average});
+        }
+        
+        // Step 3: Sort the result by student ID
+        result.sort(Comparator.comparingInt(a -> a[0]));
+        
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[][] items = {
+            {1, 91}, {1, 92}, {2, 93}, {2, 97}, {1, 60}, 
+            {2, 77}, {1, 65}, {1, 87}, {1, 100}, {2, 100}, {2, 76}
+        };
+        List<int[]> result = highFive(items);
+        
+        // Print the result
+        for (int[] res : result) {
+            System.out.println("Student " + res[0] + " Average: " + res[1]);
+        }
+    }
+}
